@@ -18,6 +18,10 @@ function TodoList() {
         setTasks((prev) => [...prev, { task: newTask, id: uuidv4() }]);
         setNewTask("");
     };
+    const deletetask = (id) => {
+        setTasks((prevTask) => tasks.filter((prevTask) => prevTask.id != id));
+    };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
@@ -61,9 +65,7 @@ function TodoList() {
 
                             {/* Delete Button */}
                             <button
-                                onClick={() =>
-                                    setTasks(tasks.filter((_, i) => i !== index))
-                                }
+                                onClick={() => deletetask(t.id)}
                                 className="text-red-400 hover:text-red-600 transition"
                             >
                                 ✕
