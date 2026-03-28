@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 function TodoList() {
     const [newTask, setNewTask] = useState("");
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState([{
+        task: "Sample Task", id: uuidv4()
+    }]);
 
     const taskHandler = (e) => {
         setNewTask(e.target.value);
@@ -12,7 +15,7 @@ function TodoList() {
         e.preventDefault();
         if (newTask.trim() === "") return;
 
-        setTasks((prev) => [...prev, newTask]);
+        setTasks((prev) => [...prev, { task: newTask, id: uuidv4() }]);
         setNewTask("");
     };
 
@@ -49,11 +52,11 @@ function TodoList() {
                 <ul className="space-y-3 max-h-64 overflow-y-auto pr-1">
                     {tasks.map((t, index) => (
                         <li
-                            key={index}
+                            key={t.id}
                             className="flex justify-between items-center bg-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition"
                         >
                             <span className="text-gray-700 font-medium">
-                                {t}
+                                {t.task}
                             </span>
 
                             {/* Delete Button */}
