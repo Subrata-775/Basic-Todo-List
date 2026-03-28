@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 function TodoList() {
     const [newTask, setNewTask] = useState("");
     const [tasks, setTasks] = useState([{
-        task: "Sample Task", id: uuidv4()
+        task: "Sample Task", id: uuidv4(), isDone: false
     }]);
 
     const taskHandler = (e) => {
@@ -15,7 +15,7 @@ function TodoList() {
         e.preventDefault();
         if (newTask.trim() === "") return;
 
-        setTasks((prev) => [...prev, { task: newTask, id: uuidv4() }]);
+        setTasks((prev) => [...prev, { task: newTask, id: uuidv4(), isDone: false }]);
         setNewTask("");
     };
     const deletetask = (id) => {
@@ -42,15 +42,36 @@ function TodoList() {
                 return EachT;
             }
         }));
-   
     }
+    //  mark  done 
+    let MarkDone = (ID) => {
+        setTasks((prevtask) => prevtask.map((eachtask) => {
+            if (eachtask.id == ID) {
+                return {
+                    ...eachtask, isDone: true
+                }
+            } else {
+                return eachtask;
+            }
+        }))
+
+    }
+
+    // Mark All Done
+    let MarkAllDone = () => {
+        setTasks((PrevTask) =>
+            PrevTask.map((Eachtask) => {
+                return { ...Eachtask, isDone: true };
+            })
+        );
+    };
 
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
 
             {/* Card */}
-            <div className="w-full max-w-lg bg-white/90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/30">
+            <div className="w-full max-w-xl bg-white/90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/30">
 
                 {/* Title */}
                 <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6 tracking-wide">
@@ -84,9 +105,12 @@ function TodoList() {
                         // here ----->t----> is  indivisual object 
                         <li
                             key={t.id}
-                            className="flex justify-between items-center bg-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition"
+                            className="flex justify-between items-center bg-white rounded-xl
+                             px-4 py-2 shadow-md hover:shadow-lg transition"
                         >
-                            <span className="text-gray-700 font-medium">
+                            <span className="text-gray-700 font-medium min-w-[100px]"
+                                style={{ textDecoration: t.isDone ? "line-through" : "none" }}
+                            >
                                 {t.task}
                             </span>
 
@@ -103,8 +127,23 @@ function TodoList() {
                             >
                                 UpperCaseOne
                             </button>
+                            <button
+                                onClick={() => MarkDone(t.id)}
+                                className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition-all duration-200"
+                            >
+                                Done
+                            </button>
                         </li>
+
                     ))}
+                    <button
+                        type="button"
+                        onClick={MarkAllDone}
+                        className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-5 py-2 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition-all duration-200"
+                    >
+                        All Done
+                    </button>
+
                 </ul>
                 <br />
 
