@@ -21,13 +21,20 @@ function TodoList() {
     const deletetask = (id) => {
         setTasks((prevTask) => tasks.filter((prevTask) => prevTask.id != id));
     };
-
+    // to upperCase  use  map 
+    let upperCaseAll = () => {
+        setTasks((prevtodos) => prevtodos.map((EachTask) => {
+            return {
+                ...EachTask, task: EachTask.task.toUpperCase()
+            }
+        }))
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
 
             {/* Card */}
-            <div className="w-full max-w-md bg-white/90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/30">
+            <div className="w-full max-w-lg bg-white/90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/30">
 
                 {/* Title */}
                 <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6 tracking-wide">
@@ -50,6 +57,9 @@ function TodoList() {
                     >
                         Add
                     </button>
+                    <div>
+                        <button onClick={upperCaseAll} type="submit" className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition-all duration-200">UpperCaseAll</button>
+                    </div>
                 </form>
 
                 {/* Task List */}
@@ -73,6 +83,8 @@ function TodoList() {
                         </li>
                     ))}
                 </ul>
+                <br />
+
 
                 {/* Empty State */}
                 {tasks.length === 0 && (
