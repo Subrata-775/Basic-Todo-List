@@ -21,7 +21,7 @@ function TodoList() {
     const deletetask = (id) => {
         setTasks((prevTask) => tasks.filter((prevTask) => prevTask.id != id));
     };
-    // to upperCase  use  map 
+    // update in array All
     let upperCaseAll = () => {
         setTasks((prevtodos) => prevtodos.map((EachTask) => {
             return {
@@ -29,6 +29,22 @@ function TodoList() {
             }
         }))
     }
+    //update in array one
+
+    let upperCaseOne = (ID) => {
+        setTasks((PrevTask) => PrevTask.map((EachT) => {
+            // console.log(EachT)
+            if (EachT.id == ID) {
+                return {
+                    ...EachT, task: EachT.task.toUpperCase(),
+                }
+            } else {
+                return EachT;
+            }
+        }));
+   
+    }
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
@@ -65,6 +81,7 @@ function TodoList() {
                 {/* Task List */}
                 <ul className="space-y-3 max-h-64 overflow-y-auto pr-1">
                     {tasks.map((t, index) => (
+                        // here ----->t----> is  indivisual object 
                         <li
                             key={t.id}
                             className="flex justify-between items-center bg-white rounded-xl px-4 py-2 shadow-md hover:shadow-lg transition"
@@ -76,9 +93,15 @@ function TodoList() {
                             {/* Delete Button */}
                             <button
                                 onClick={() => deletetask(t.id)}
-                                className="text-red-400 hover:text-red-600 transition"
+                                className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition-all duration-200"
                             >
                                 ✕
+                            </button>
+                            <button
+                                onClick={() => upperCaseOne(t.id)}
+                                className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition-all duration-200"
+                            >
+                                UpperCaseOne
                             </button>
                         </li>
                     ))}
